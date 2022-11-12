@@ -25,7 +25,6 @@ public class Role implements Serializable {
     private String roleName;
 
     @OneToMany (mappedBy = "role")
-    @JoinColumn(name = "role_id")
     private List<User> user;
 
     @Override

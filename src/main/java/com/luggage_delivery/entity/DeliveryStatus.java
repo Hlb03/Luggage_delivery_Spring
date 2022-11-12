@@ -23,6 +23,5 @@ public class DeliveryStatus implements Serializable {
     private String statusName;
 
     @OneToMany(mappedBy = "status")
-    @JoinColumn(name = "delivery_status_id")
     List<Delivery> deliveries;
 }

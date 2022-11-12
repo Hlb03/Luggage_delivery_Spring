@@ -35,11 +35,14 @@ public class Delivery implements Serializable {
     private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "delivery_status_id")
     private DeliveryStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "routes_id")
     private Route route;
 }

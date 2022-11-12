@@ -27,6 +27,5 @@ public class Route implements Serializable {
     private double distance;
 
     @OneToMany(mappedBy = "route")
-    @JoinColumn(name = "routes_id")
     private List<Delivery> deliveries;
 }

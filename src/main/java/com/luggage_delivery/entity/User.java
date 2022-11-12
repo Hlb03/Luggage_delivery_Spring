@@ -33,10 +33,10 @@ public class User implements Serializable {
     private BigDecimal balance;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @OneToMany (mappedBy = "user")
-    @JoinColumn(name = "user_id")
     private Set<Delivery> deliveries;
 
     @Override
