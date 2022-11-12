@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -21,14 +22,33 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @NotBlank(message = "Name could not be blank")
+    @Size(max = 30)
+    @Pattern(regexp = "\\D[\\d- ]+", message = "Name should starts with capital letter")
     @Column(name = "first_name")
     private String firstName;
+
+    @NotNull
+    @NotBlank(message = "Last name could not be blank")
+    @Size(max = 30)
+    @Pattern(regexp = "\\D[\\d- ]+", message = "Last name should starts with capital letter")
     @Column(name = "last_name")
     private String lastName;
+
+    @NotNull
+    @NotBlank
+    @Email(message = "Do not matches with email pattern")
     @Column(name = "login")
     private String login;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 5, max = 20, message = "Password should contain at least 5 symbols")
     @Column(name = "password")
     private String password;
+
+    @NotNull
     @Column(name = "balance")
     private BigDecimal balance;
 
