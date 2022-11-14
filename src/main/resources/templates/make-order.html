@@ -42,41 +42,49 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;
-        Total price - 0.00
+        <span th:if="${totalPrice} ne null" th:text="'Total price ' + ${totalPrice}"></span>
     </div>
     <div class="content">
         <form action="make-order/order-process" method="post">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Size</span>
-                    <input type="number" name="size" min="5" step="0.01" placeholder="Enter luggage volume"
-                           required>
+                    <input type="number" name="size" min="5" step="0.01" placeholder="Enter luggage volume" required
+                           th:if="${size} ne 0" th:value="${size}">
                 </div>
                 <div class="input-box">
                     <span class="details">Type</span>
                     <input type="text" name="type" placeholder="Enter category" pattern="[A-Z]+"
-                           title="SPORT" required>
+                           title="SPORT" required
+                           th:if="${type} ne 0" th:value="${type}">
                 </div>
                 <div class="input-box">
                     <span class="details">Weight</span>
-                    <input type="number" name="weight" min="0.2" step="0.01" placeholder="Enter weight"
-                           required>
+                    <input type="number" name="weight" min="0.2" step="0.01" placeholder="Enter weight" required
+                           th:if="${weight} ne 0" th:value="${weight}">
                 </div>
                 <div class="input-box">
                     <span class="details">Choose the route</span>
                     <select name="routeId">
                         <optgroup label="START POINT - FINAL POINT">
                             <div th:each="route: ${allRoutes}">
-                                <option th:value="${route.id}"
-                                        th:text="${route.startPoint} + ' - ' + ${route.destinationPoint}"></option>
+                                <div th:if="${routeId} eq ${route.id}">
+                                    <option th:value="${route.id}"
+                                            th:text="${route.startPoint} + ' - ' + ${route.destinationPoint}"
+                                            selected></option>
+                                </div>
+                                <div th:if="${routeId ne route.id}">
+                                    <option th:value="${route.id}"
+                                            th:text="${route.startPoint} + ' - ' + ${route.destinationPoint}"></option>
+                                </div>
                             </div>
                         </optgroup>
                     </select>
                 </div>
                 <div class="input-box">
                     <span class="details">Delivery date</span>
-                    <input type="date" name="deliveryDate" placeholder="Enter the date"
-                           id="minDate">
+                    <input type="date" name="deliveryDate" placeholder="Enter the date" id="minDate"
+                           th:if="${deliveryDate} ne 0" th:value="${deliveryDate}">
                     <script>
                         var today = new Date().toISOString().split('T')[0];
                         document.getElementsByName("deliveryDate")[0].setAttribute('min', today);
@@ -84,29 +92,50 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Address</span>
-                    <input type="text" name="address" placeholder="Enter address"
-                           required>
+                    <input type="text" name="address" placeholder="Enter address" required
+                           th:if="${address} ne 0" th:value="${address}">
                 </div>
             </div>
             <div class="gender-details">
-                <input type="radio" name="option" value="None" id="dot-1" checked>
-                <input type="radio" name="option" value="Fragile" id="dot-2">
-                <span class="gender-title">Special option</span>
-                <div class="category">
-                    <label for="dot-1">
-                        <span class="dot one"></span>
-                        <span class="option">None</span>
-                    </label>
-                    <label for="dot-2">
-                        <span class="dot two"></span>
-                        <span class="option">Fragile</span>
-                    </label>
+
+                <div th:if="${option eq 'Fragile'}">
+                    <input type="radio" name="option" value="None" id="dot-1">
+                    <input type="radio" name="option" value="Fragile" id="dot-2" checked>
+                    <span class="gender-title">Special option</span>
+                    <div class="category">
+                        <label for="dot-1">
+                            <span class="dot one"></span>
+                            <span class="option">None</span>
+                        </label>
+                        <label for="dot-2">
+                            <span class="dot two"></span>
+                            <span class="option">Fragile</span>
+                        </label>
+                    </div>
                 </div>
+
+                <div th:if="${option} ne 'Fragile'">
+                    <input type="radio" name="option" value="None" id="dot-1" checked>
+                    <input type="radio" name="option" value="Fragile" id="dot-2">
+                    <span class="gender-title">Special option</span>
+                    <div class="category">
+                        <label for="dot-1">
+                            <span class="dot one"></span>
+                            <span class="option">None</span>
+                        </label>
+                        <label for="dot-2">
+                            <span class="dot two"></span>
+                            <span class="option">Fragile</span>
+                        </label>
+                    </div>
+                </div>
+
             </div>
             <div class="button">
                 <input type="submit" name="orderButton" value="Make an order" style="margin-bottom: 5px">
-                <form method="post" action="make-order/price-calculate">
-                    <input type="submit" name="priceCalculateButton" value="Calculate price">
+                <form method="post">
+                    <input type="submit" name="priceCalculateButton" formaction="make-order/price-calculate"
+                           value="Calculate price">
                 </form>
             </div>
         </form>

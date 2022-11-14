@@ -17,6 +17,7 @@ import com.luggage_delivery.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -64,5 +65,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         System.out.println("DELIVERY PARAMS: " + delivery);
 //        deliveryRepository.save(delivery);
+    }
+
+    @Override
+    public BigDecimal calculateOrderPrice(double size, double weight, int routeId, String option) {
+        Route route = routeRepository.getReferenceById(routeId);
+        return priceCalculate(weight, size, route.getDistance(), option, tariffRepository.findAll());
     }
 }
