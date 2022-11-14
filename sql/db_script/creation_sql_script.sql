@@ -155,7 +155,15 @@ CREATE TABLE IF NOT EXISTS `luggage_delivery`.`tariff`
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
 
+-- -----------------------------------
+-- insert into `role` table
+-- -----------------------------------
 INSERT INTO `role` (`role_name`) VALUES ('USER'), ('MANAGER');
+
+-- -----------------------------------
+-- insert into `delivery_status` table
+-- -----------------------------------
+INSERT INTO `delivery_status` (`status_name`) VALUES ('PROCESSING'), ('REJECTED'), ('PAY'), ('IN PROGRESS');
 
 
 SET SQL_MODE = @OLD_SQL_MODE;
