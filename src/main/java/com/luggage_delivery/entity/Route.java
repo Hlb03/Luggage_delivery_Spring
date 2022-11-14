@@ -41,4 +41,13 @@ public class Route implements Serializable {
 
     @OneToMany(mappedBy = "route")
     private List<Delivery> deliveries;
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "startPoint = " + startPoint + ", " +
+                "destinationPoint = " + destinationPoint + ", " +
+                "distance = " + distance + ")";
+    }
 }

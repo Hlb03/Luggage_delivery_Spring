@@ -31,4 +31,11 @@ public class DeliveryStatus implements Serializable {
 
     @OneToMany(mappedBy = "status")
     List<Delivery> deliveries;
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "statusName = " + statusName + ")";
+    }
 }

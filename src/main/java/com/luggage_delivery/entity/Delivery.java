@@ -65,4 +65,19 @@ public class Delivery implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "routes_id")
     private Route route;
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "luggageSize = " + luggageSize + ", " +
+                "weight = " + weight + ", " +
+                "luggageType = " + luggageType + ", " +
+                "startDate = " + startDate + ", " +
+                "deliveryDate = " + deliveryDate + ", " +
+                "address = " + address + ", " +
+                "totalPrice = " + totalPrice + ", " +
+                "user = " + user.getLogin() + ", status = " + status.getStatusName() + ", route = "
+                + route.getStartPoint() + " - " + route.getDestinationPoint() + ")";
+    }
 }
