@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeliveryStatusRepository extends JpaRepository<DeliveryStatus, Integer> {
+
+    DeliveryStatus getByStatusName(String statusName);
 }
