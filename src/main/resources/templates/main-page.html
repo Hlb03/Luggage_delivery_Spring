@@ -26,10 +26,9 @@
                     <a class="nav-link disabled" href="#">View my orders</a>
                 </li>
             </ul>
-            <!--        <form class="form-inline mt-2 mt-md-0">-->
-            <!--            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
-            <!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-            <!--        </form>-->
+            <form th:action="@{/login}" class="form-inline mt-2 mt-md-0" style="position: relative; left: 1050px; top: 10px">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+            </form>
         </div>
     </nav>
 </header>
@@ -47,7 +46,7 @@
         <div style="font-size: 20px" class="col-6">
             <div th:switch="${typeOfTariffSort}">
                 <a th:case="'asc'" th:href="@{/(page=${currentPage}, tariffField='type', typeOfTariffSort='desc')}"
-                        href="#" style="color: black">NAME</a>
+                   href="#" style="color: black">NAME</a>
                 <a th:case="'desc'" th:href="@{/(page=${currentPage}, tariffField='type', typeOfTariffSort='asc')}"
                    href="#" style="color: black">NAME</a>
             </div>
