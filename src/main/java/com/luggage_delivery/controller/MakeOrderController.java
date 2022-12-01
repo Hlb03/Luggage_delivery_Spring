@@ -5,18 +5,16 @@ package com.luggage_delivery.controller;
   Cur_time: 14:38
 */
 
+import com.luggage_delivery.entity.Delivery;
 import com.luggage_delivery.service.DeliveryService;
 import com.luggage_delivery.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 
 @Controller
 @RequestMapping("/make-order")
@@ -41,10 +39,10 @@ public class MakeOrderController {
                                 @RequestParam(value = "routeId", required = false) String routeId,
                                 @RequestParam(value = "option", required = false) String option,
                                 Model model) {
-        System.out.println("TOTAL PRICE IS: " + totalPrice + " SIZE = " + size);
 
         model.addAttribute("allRoutes", routeService.findRoutes());
 
+        System.out.println("ATTRIBUTES AFTER PRICE CALC: " + totalPrice + " " + size + " " + type + " " + weight);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("size", size);
         model.addAttribute("type", type);
@@ -53,34 +51,35 @@ public class MakeOrderController {
         model.addAttribute("address", address);
         model.addAttribute("routeId", routeId);
         model.addAttribute("option", option);
+
+        model.addAttribute("delivery", new Delivery());
         return "make-order";
     }
 
     @PostMapping("/order-process")
-    public String orderProcess(@RequestParam(value = "size") double size,
-                               @RequestParam(value = "weight") double weight,
-                               @RequestParam(value = "type") String type,
-                               @RequestParam(value = "routeId") int routeId,
-                               @RequestParam(value = "deliveryDate")Date date,
-                               @RequestParam(value = "address")String address,
-                               @RequestParam(value = "option")String option) {
+    public String orderProcess(@ModelAttribute("delivery")Delivery delivery,
+                               @RequestParam(value = "option")String option,
+                               Authentication authentication) {
 
-        deliveryService.addNewDelivery(size, weight, type, address, date, routeId, option);
+        BigDecimal totalPrice = deliveryService.calculateOrderPrice(
+                delivery.getLuggageSize(), delivery.getWeight(), delivery.getRoute().getId(), option);
+        deliveryService.addNewDelivery(delivery.getLuggageSize(), delivery.getWeight(),
+                                       delivery.getLuggageType(), delivery.getAddress(),
+                                       delivery.getDeliveryDate(), delivery.getRoute().getId(),
+                                       totalPrice, authentication.getName());
         return "redirect:/";
     }
 
     @PostMapping("/price-calculate")
-    public String orderPriceCalculate(@RequestParam(value = "size") double size,
-                                      @RequestParam(value = "weight") double weight,
-                                      @RequestParam(value = "type") String type,
-                                      @RequestParam(value = "routeId") int routeId,
-                                      @RequestParam(value = "deliveryDate")Date date,
-                                      @RequestParam(value = "address")String address,
-                                      @RequestParam(value = "option")String option) {
+    public String orderPriceCalculate(@ModelAttribute("delivery")Delivery delivery,
+                                      @RequestParam(value = "option")String option){
 
-        BigDecimal totalPrice = deliveryService.calculateOrderPrice(size, weight, routeId, option);
-        return "redirect:/make-order?totalPrice=" + totalPrice + "&size=" + size + "&type=" + type +
-                "&weight=" + weight + "&deliveryDate=" + date + "&address=" + address +
-                "&routeId=" + routeId + "&option=" + option;
+        BigDecimal totalPrice = deliveryService.calculateOrderPrice(
+                delivery.getLuggageSize(), delivery.getWeight(), delivery.getRoute().getId(), option);
+
+        return "redirect:/make-order?totalPrice=" + totalPrice + "&size=" + delivery.getLuggageSize() +
+                "&type=" + delivery.getLuggageType() + "&weight=" + delivery.getWeight()
+                + "&deliveryDate=" + delivery.getDeliveryDate() + "&address=" + delivery.getAddress() +
+                "&routeId=" + delivery.getRoute().getId() + "&option=" + option;
     }
 }
