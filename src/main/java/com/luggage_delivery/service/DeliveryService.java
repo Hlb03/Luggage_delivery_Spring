@@ -5,6 +5,7 @@ import java.sql.Date;
 
 public interface DeliveryService {
 
-    void addNewDelivery(double size, double weight, String type, String address, Date deliveryDate, int routeId, String option);
+    void addNewDelivery(double size, double weight, String type, String address,
+                        Date deliveryDate, int routeId, BigDecimal price, String userLogin);
     BigDecimal calculateOrderPrice(double size, double weight, int routeId, String option);
 }

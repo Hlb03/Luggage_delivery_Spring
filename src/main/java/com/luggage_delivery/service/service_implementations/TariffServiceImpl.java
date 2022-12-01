@@ -22,7 +22,6 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public List<Tariff> getAllTariffs(String field, String typeOfOrder) {
-
         return tariffRepository.findAll(Sort.by(Sort.Direction.fromString(typeOfOrder), field));
     }
 }
