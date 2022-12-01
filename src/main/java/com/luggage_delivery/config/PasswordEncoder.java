@@ -1,0 +1,19 @@
+package com.luggage_delivery.config;
+/*
+  User: admin
+  Cur_date: 16.11.2022
+  Cur_time: 17:45
+*/
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+public class PasswordEncoder {
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
+}
