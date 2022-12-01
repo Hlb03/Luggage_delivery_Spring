@@ -58,9 +58,9 @@ public class Delivery implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "delivery_status_id")
-    private DeliveryStatus status;
+    @Column(name = "delivery_status_name")
+    @Enumerated(value = EnumType.STRING)
+    private DeliveryStatus deliveryStatus;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "routes_id")
@@ -77,7 +77,7 @@ public class Delivery implements Serializable {
                 "deliveryDate = " + deliveryDate + ", " +
                 "address = " + address + ", " +
                 "totalPrice = " + totalPrice + ", " +
-                "user = " + user.getLogin() + ", status = " + status.getStatusName() + ", route = "
+                "user = " + user.getLogin() + ", status = " + deliveryStatus + ", route = "
                 + route.getStartPoint() + " - " + route.getDestinationPoint() + ")";
     }
 }

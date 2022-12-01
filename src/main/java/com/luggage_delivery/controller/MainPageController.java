@@ -1,4 +1,4 @@
-package com.luggage_delivery.controller;
+package com.luggage_delivery.entity.controller;
 
 import com.luggage_delivery.service.RouteService;
 import com.luggage_delivery.service.TariffService;

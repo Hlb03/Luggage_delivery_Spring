@@ -52,12 +52,16 @@ public class User implements Serializable {
     @Column(name = "balance")
     private BigDecimal balance;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Column(name = "role_name")
+    @Enumerated(value = EnumType.STRING)
+    private Role roleName;
 
     @OneToMany (mappedBy = "user")
     private Set<Delivery> deliveries;
+
+    @Column(name = "status_name")
+    @Enumerated(value = EnumType.STRING)
+    private Status statusName;
 
     @Override
     public String toString() {
@@ -68,7 +72,8 @@ public class User implements Serializable {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
-                ", role=" + role +
+                ", role=" + roleName +
+                ", status=" + statusName +
                 '}';
     }
 
@@ -77,11 +82,11 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(balance, user.balance) && Objects.equals(role, user.role);
+        return id == user.id && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(balance, user.balance) && Objects.equals(roleName, user.roleName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, login, password, balance, role);
+        return Objects.hash(id, firstName, lastName, login, password, balance, roleName);
     }
 }
