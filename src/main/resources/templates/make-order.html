@@ -6,181 +6,8 @@
 
     <title>Main page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
-    <link th:href="@{/css/make-order.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{css/make-order.css}">
 
-<!--    <style>-->
-<!--        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');-->
-
-<!--        * {-->
-<!--            margin: 0;-->
-<!--            padding: 0;-->
-<!--            box-sizing: border-box;-->
-<!--            font-family: 'Poppins', sans-serif;-->
-<!--        }-->
-
-<!--        body {-->
-<!--            height: 100vh;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            padding: 10px;-->
-<!--            background: linear-gradient(135deg, #71b7e6, #9b59b6);-->
-<!--        }-->
-
-<!--        .container {-->
-<!--            max-width: 700px;-->
-<!--            width: 100%;-->
-<!--            background-color: #fff;-->
-<!--            padding: 25px 30px;-->
-<!--            border-radius: 5px;-->
-<!--            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);-->
-<!--        }-->
-
-<!--        .container .title {-->
-<!--            font-size: 25px;-->
-<!--            font-weight: 500;-->
-<!--            position: relative;-->
-<!--        }-->
-
-<!--        .container .title::before {-->
-<!--            content: "";-->
-<!--            position: absolute;-->
-<!--            left: 0;-->
-<!--            bottom: 0;-->
-<!--            height: 3px;-->
-<!--            width: 30px;-->
-<!--            border-radius: 5px;-->
-<!--            background: linear-gradient(135deg, #71b7e6, #9b59b6);-->
-<!--        }-->
-
-<!--        .content form .user-details {-->
-<!--            display: flex;-->
-<!--            flex-wrap: wrap;-->
-<!--            justify-content: space-between;-->
-<!--            margin: 20px 0 12px 0;-->
-<!--        }-->
-
-<!--        form .user-details .input-box {-->
-<!--            margin-bottom: 15px;-->
-<!--            width: calc(100% / 2 - 20px);-->
-<!--        }-->
-
-<!--        form .input-box span.details {-->
-<!--            display: block;-->
-<!--            font-weight: 500;-->
-<!--            margin-bottom: 5px;-->
-<!--        }-->
-
-<!--        .user-details .input-box input {-->
-<!--            height: 45px;-->
-<!--            width: 100%;-->
-<!--            outline: none;-->
-<!--            font-size: 16px;-->
-<!--            border-radius: 5px;-->
-<!--            padding-left: 15px;-->
-<!--            border: 1px solid #ccc;-->
-<!--            border-bottom-width: 2px;-->
-<!--            transition: all 0.3s ease;-->
-<!--        }-->
-
-<!--        .user-details .input-box input:focus,-->
-<!--        .user-details .input-box input:valid {-->
-<!--            border-color: #9b59b6;-->
-<!--        }-->
-
-<!--        form .gender-details .gender-title {-->
-<!--            font-size: 20px;-->
-<!--            font-weight: 500;-->
-<!--        }-->
-
-<!--        form .category {-->
-<!--            display: flex;-->
-<!--            width: 80%;-->
-<!--            margin: 14px 0;-->
-<!--            justify-content: space-between;-->
-<!--        }-->
-
-<!--        form .category label {-->
-<!--            display: flex;-->
-<!--            align-items: center;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        form .category label .dot {-->
-<!--            height: 18px;-->
-<!--            width: 18px;-->
-<!--            border-radius: 50%;-->
-<!--            margin-right: 10px;-->
-<!--            background: #d9d9d9;-->
-<!--            border: 5px solid transparent;-->
-<!--            transition: all 0.3s ease;-->
-<!--        }-->
-
-<!--        #dot-1:checked ~ .category label .one,-->
-<!--        #dot-2:checked ~ .category label .two,-->
-<!--        #dot-3:checked ~ .category label .three {-->
-<!--            background: #9b59b6;-->
-<!--            border-color: #d9d9d9;-->
-<!--        }-->
-
-<!--        form input[type="radio"] {-->
-<!--            display: none;-->
-<!--        }-->
-
-<!--        form .button {-->
-<!--            height: 45px;-->
-<!--            margin: 35px 0-->
-<!--        }-->
-
-<!--        form .button input {-->
-<!--            height: 100%;-->
-<!--            width: 100%;-->
-<!--            border-radius: 5px;-->
-<!--            border: none;-->
-<!--            color: #fff;-->
-<!--            font-size: 18px;-->
-<!--            font-weight: 500;-->
-<!--            letter-spacing: 1px;-->
-<!--            cursor: pointer;-->
-<!--            transition: all 0.3s ease;-->
-<!--            background: linear-gradient(135deg, #71b7e6, #9b59b6);-->
-<!--        }-->
-
-<!--        form .button input:hover {-->
-<!--            /* transform: scale(0.99); */-->
-<!--            background: linear-gradient(-135deg, #71b7e6, #9b59b6);-->
-<!--        }-->
-
-<!--        @media (max-width: 584px) {-->
-<!--            .container {-->
-<!--                max-width: 100%;-->
-<!--            }-->
-
-<!--            form .user-details .input-box {-->
-<!--                margin-bottom: 15px;-->
-<!--                width: 100%;-->
-<!--            }-->
-
-<!--            form .category {-->
-<!--                width: 100%;-->
-<!--            }-->
-
-<!--            .content form .user-details {-->
-<!--                max-height: 300px;-->
-<!--                overflow-y: scroll;-->
-<!--            }-->
-
-<!--            .user-details::-webkit-scrollbar {-->
-<!--                width: 5px;-->
-<!--            }-->
-<!--        }-->
-
-<!--        @media (max-width: 459px) {-->
-<!--            .container .content .category {-->
-<!--                flex-direction: column;-->
-<!--            }-->
-<!--        }-->
-<!--    </style>-->
 </head>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -197,12 +24,20 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/Luggage-delivery/make-order">Make order</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${userLogin} eq null" class="nav-item">
                     <a class="nav-link disabled" href="#">View my orders</a>
                 </li>
+                <li th:if="${userLogin} ne null" class="nav-item">
+                    <a class="nav-link" href="/Luggage-delivery/user-order">View my orders</a>
+                </li>
             </ul>
-            <form th:action="@{/login}" class="form-inline mt-2 mt-md-0" style="position: relative; left: 1000px">
+            <form th:if="${userLogin} eq null"
+                  th:action="@{/login}" class="form-inline mt-2 mt-md-0" style="position: relative; left: 1000px">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+            </form>
+            <form th:if="${userLogin} ne null"
+                  th:action="@{/login}" class="form-inline mt-2 mt-md-0" style="position: relative; left: 980px">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign out</button>
             </form>
         </div>
     </nav>
@@ -215,34 +50,42 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <span th:if="${totalPrice} ne null" th:text="'Total price ' + ${totalPrice}"></span>
+        <!--        <span th:if="${totalPrice} ne null" th:text="'Total price ' + ${totalPrice}"></span>-->
+        <span th:if="${totalPrice} ne null"
+              th:text="'Total price ' + ${totalPrice}">
+
+        </span>
     </div>
     <div class="content">
-        <form th:action="@{make-order/order-process}" th:method="post" th:object="${delivery}">
+        <form th:action="@{make-order/order-process}" th:method="post">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Size</span>
-                    <input type="hidden"
-                           name="${_csrf.parameterName}"
-                           value="${_csrf.token}"/>
-                    <input type="number" th:field="*{luggageSize}" min="5" step="0.01"
-                           placeholder="Enter luggage volume" required
-                           th:if="${size} ne 0.0" th:value="${size}">
+                    <input type="number"
+                           th:value="${size}"
+                           name="size"
+                           min="5" step="0.01"
+                           placeholder="Enter luggage volume" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Type</span>
-                    <input type="text" th:field="*{luggageType}" placeholder="Enter category" pattern="[A-Z]+"
-                           title="SPORT" required
-                           th:if="${type} ne 0" th:value="${type}">
+                    <input type="text"
+                           name="type"
+                           th:value="${type}"
+                           placeholder="Enter category" pattern="[A-Z]+"
+                           title="SPORT" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Weight</span>
-                    <input type="number" th:field="*{weight}" min="0.2" step="0.01" placeholder="Enter weight" required
-                           th:if="${weight} ne 0.0" th:value="${weight}">
+                    <input type="number" name="weight"
+                           th:value="${weight}"
+                           placeholder="Enter weight"
+                           min="0.2" step="0.01" required>
                 </div>
+
                 <div class="input-box">
                     <span class="details">Choose the route</span>
-                    <select th:field="*{route.id}">
+                    <select name="routeId">
                         <optgroup label="START POINT - FINAL POINT">
                             <div th:each="route: ${allRoutes}">
                                 <div th:if="${routeId} eq ${route.id}">
@@ -250,7 +93,7 @@
                                             th:text="${route.startPoint} + ' - ' + ${route.destinationPoint}"
                                             selected></option>
                                 </div>
-                                <div th:if="${routeId ne route.id}">
+                                <div th:if="${routeId} ne ${route.id}">
                                     <option th:value="${route.id}"
                                             th:text="${route.startPoint} + ' - ' + ${route.destinationPoint}"></option>
                                 </div>
@@ -260,21 +103,21 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Delivery date</span>
-                    <input type="date" th:field="*{deliveryDate}" placeholder="Enter the date" id="minDate"
-                           th:if="${deliveryDate} ne 0" th:value="${deliveryDate}">
+                    <input type="date" placeholder="Enter the date" id="minDate"
+                           name="deliveryDate" th:value="${deliveryDate}">
                     <script>
-                        var today = new Date().toISOString().split('T')[0];
+                        const today = new Date().toISOString().split('T')[0];
                         document.getElementsByName("deliveryDate")[0].setAttribute('min', today);
                     </script>
                 </div>
                 <div class="input-box">
                     <span class="details">Address</span>
-                    <input type="text" th:field="*{address}" placeholder="Enter address" required
-                           th:if="${address} ne 0" th:value="${address}">
+                    <input type="text" name="address"
+                           th:value="${address}" placeholder="Enter address"
+                           required>
                 </div>
             </div>
             <div class="gender-details">
-
                 <div th:if="${option eq 'Fragile'}">
                     <input type="radio" name="option" value="None" id="dot-1">
                     <input type="radio" name="option" value="Fragile" id="dot-2" checked>
@@ -290,8 +133,7 @@
                         </label>
                     </div>
                 </div>
-
-                <div th:if="${option} ne 'Fragile'">
+                <div th:if="${option ne 'Fragile'}">
                     <input type="radio" name="option" value="None" id="dot-1" checked>
                     <input type="radio" name="option" value="Fragile" id="dot-2">
                     <span class="gender-title">Special option</span>
