@@ -1,0 +1,121 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <title>Main page</title>
+</head>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/Luggage-delivery">Luggage delivery</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Luggage-delivery">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/Luggage-delivery/admin-room">Admin room</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Luggage-delivery/reports">Create report</a>
+                </li>
+            </ul>
+            <form th:if="${userLogin} == null"
+                  th:action="@{/login}" class="form-inline mt-2 mt-md-0"
+                  style="position: relative; left: 1050px; top: 10px">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+            </form>
+            <form th:if="${userLogin} != null" method="post"
+                  th:action="@{/logout}" class="form-inline mt-2 mt-md-0"
+                  style="position: relative; left: 1030px; top: 10px">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign out</button>
+            </form>
+        </div>
+    </nav>
+</header>
+<br>
+<br>
+<br>
+<br>
+<h2 style="text-align: center" th:text="'All orders with status ' + ${#strings.toString(orderStatus)}">--</h2>
+<body>
+
+<table class="table table-striped table-dark">
+    <thead>
+    <tr>
+        <th scope="col">Order id</th>
+        <th scope="col">User login</th>
+        <th scope="col">Size</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Type</th>
+        <th scope="col">Order date</th>
+        <th scope="col">Delivery date</th>
+        <th scope="col">Address</th>
+        <th scope="col">Route</th>
+        <th scope="col">Price</th>
+        <th scope="col">Approve</th>
+        <th scope="col">Reject</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="order : ${allOrders}">
+        <tr>
+            <th scope="col" th:text="${order.id}"/>
+            <th scope="col" th:text="${order.user.login}">-</th>
+            <th scope="col" th:text="${order.luggageSize}">-</th>
+            <th scope="col" th:text="${order.weight}">-</th>
+            <th scope="col" th:text="${order.luggageType}">-</th>
+            <th scope="col" th:text="${order.startDate}"></th>
+            <th scope="col" th:text="${order.deliveryDate}"></th>
+            <th scope="col" th:text="${order.address}">Address</th>
+            <th scope="col" th:text="${order.route.startPoint} + ' --> ' + ${order.route.destinationPoint}"/>
+            <th scope="col" th:text="${order.totalPrice}">Price</th>
+            <th:block th:if="${#strings.toString(orderStatus)} eq 'PROCESSING'">
+                <th scope="col">
+                    <form th:action="@{'/admin-room/order-process/' + ${order.id}}" method="post">
+                        <input type="hidden" name="processOrder" value="approve">
+                        <input style="background-color: green" type="submit" value="&#9745;">
+                    </form>
+                </th>
+                <th scope="col">
+                    <form th:action="@{'/admin-room/order-process/' + ${order.id}}" method="post">
+                        <input type="hidden" name="processOrder" value="reject">
+<!--                        <input type="hidden" name="orderId" value="${delivery.id}">-->
+                        <input style="background-color: red" type="submit" value="&#9746;">
+                    </form>
+                </th>
+            </th:block>
+            <th:block th:if="${#strings.toString(orderStatus)} ne 'PROCESSING'">
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </th:block>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li th:if="${page} ne 1" class="page-item ">
+            <a class="page-link" th:href="@{'/admin-room?page=' + ${page - 1}}" tabindex="-1">Previous</a>
+        </li>
+        <li th:if="${page} eq 1" class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+
+        <li th:if="${page} ne ${totalPages}" class="page-item">
+            <a class="page-link" th:href="@{'/admin-room?page=' + ${page + 1}}">Next</a>
+        </li>
+        <li th:if="${page} eq ${totalPages}" class="page-item disabled">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>
