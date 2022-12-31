@@ -19,15 +19,33 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/Luggage-delivery">Home</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${#strings.toString(role)} eq null or ${#strings.toString(role)} eq 'USER'" class="nav-item">
                     <a class="nav-link" href="/Luggage-delivery/make-order">Make order</a>
                 </li>
-                <li class="nav-item">
+                <th:block th:if="${#strings.toString(role)} eq 'MANAGER'">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Luggage-delivery/admin-room">Admin room</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Luggage-delivery/reports">Create report</a>
+                    </li>
+                </th:block>
+                <li th:if="${userLogin} eq null and ${#strings.toString(role)} ne 'MANAGER'" class="nav-item">
                     <a class="nav-link disabled" href="#">View my orders</a>
                 </li>
+                <li th:if="${userLogin} ne null and ${#strings.toString(role)} ne 'MANAGER'" class="nav-item">
+                    <a class="nav-link" href="/Luggage-delivery/user-order">View my orders</a>
+                </li>
             </ul>
-            <form th:action="@{/login}" class="form-inline mt-2 mt-md-0" style="position: relative; left: 1050px; top: 10px">
+            <form th:if="${userLogin} == null"
+                  th:action="@{/login}" class="form-inline mt-2 mt-md-0"
+                  style="position: relative; left: 1050px; top: 10px">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+            </form>
+            <form th:if="${userLogin} != null" method="post"
+                  th:action="@{/logout}" class="form-inline mt-2 mt-md-0"
+                  style="position: relative; left: 1030px; top: 10px">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign out</button>
             </form>
         </div>
     </nav>
@@ -117,9 +135,6 @@
                        href="#" tabindex="-1">Previous</a>
                 </li>
             </div>
-            <!--                    <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-            <!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-            <!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
             <div th:if="${totalPages eq currentPage}">
                 <li class="page-item disabled">
                     <a class="page-link" href="#">Next</a>
