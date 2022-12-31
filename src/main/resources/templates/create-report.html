@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Create report</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{css/create-reports.css}">
+
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/Luggage-delivery">Luggage delivery</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Luggage-delivery">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Luggage-delivery/admin-room">Admin room</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/Luggage-delivery/reports">Create report</a>
+                </li>
+            </ul>
+            <form method="post"
+                  th:action="@{/logout}" class="form-inline mt-2 mt-md-0"
+                  style="position: relative; left: 1040px">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign out</button>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<body>
+<section class="text-center text-lg-start image-background">
+
+    <div class="row g-0 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card cascading-right" style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);">
+                <div class="card-body p-5 shadow-5 text-center">
+                    <h2 class="fw-bold mb-5">Day report</h2>
+                    <form th:action="@{/reports/view}" method="get">
+                        <input type="hidden" name="type" value="Date">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form3Example3">Choose the date:</label>
+                            <br>
+                            <input type="date" id="form3Example3" name="reportField" class="form-control" required/>
+                            <!--                            <script>-->
+                            <!--                                var today = new Date().toISOString().split('T')[0];-->
+                            <!--                                document.getElementsByName("report-date")[0].setAttribute('min', today);-->
+                            <!--                            </script>-->
+                        </div>
+
+                        <input type="submit" class="btn btn-primary btn-block mb-4"
+                               name="dateReport" value="Create report">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <div class="row g-0 align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card cascading-right" style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);">
+                    <div class="card-body p-5 shadow-5 text-center">
+                        <h2 class="fw-bold mb-5">Route report</h2>
+                        <form th:action="@{/reports/view}" method="get">
+                            <input type="hidden" name="type" value="Route">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form3Example4">Choose the route:</label>
+                                <br>
+                                <select id="form3Example4" name="reportField">
+                                    <optgroup label="START POINT - FINAL POINT">
+                                        <div th:each="route: ${allRoutes}">
+                                            <div>
+                                                <option th:value="${route.id}"
+                                                        th:text="${route.startPoint} + ' - ' + ${route.destinationPoint}"></option>
+                                            </div>
+                                        </div>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-block mb-4"
+                                   name="routeReport" value="Create report">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        <%&#45;&#45;        <a href="../../../pdf_reports/statistics.pdf">&#45;&#45;%>-->
+        <!--        <c:if test="${requestScope.downloadPdf ne null}">-->
+        <!--            <script>-->
+        <!--                var link = document.createElement('a');-->
+        <!--                link.setAttribute('download', "statistics.pdf");-->
+        <!--                link.href = "../../../pdf_reports/statistics.pdf"-->
+        <!--                document.body.appendChild(link);-->
+        <!--                link.click();-->
+        <!--                link.remove();-->
+        <!--            </script>-->
+        <!--        </c:if>-->
+
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.image-background {
+    background-image: url("../images/report-image.jpg");
+    height: 757px;
+}
+
+.cascading-right {
+    margin-right: -50px;
+}
+
+@media (max-width: 991.98px) {
+    .cascading-right {
+        margin-right: 0;
+    }
+}

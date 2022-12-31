@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title th:text="${name} + ' report'"/>
+
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+</head>
+<body>
+
+<!-- TODO: ADD js CODE TO HIDE 'DOWNLOAD PDF' BUTTON -->
+
+<main data-ng-app="sampleApp"
+      data-ng-controller="mainController">
+
+    <h1 th:text="'This is a report based on the ' + ${field} + ' ' + ${name}"/>
+    <p th:text="'Here is provided all the deliveries that are connected with highly mentioned ' + ${name} + '.'"/>
+    <p><i>You may download this report by clicking on the 'Download PDF' button.</i></p>
+
+    <input id="filter" type="text" placeholder="Filter" class="form-control"
+           data-ng-model="filterTable">
+
+    <br>
+
+    <div th:if="${#lists.isEmpty(entities)}">
+        <h3 class="centered" style="color: firebrick"
+            th:text="'Unfortunately, there were no deliveries found based on ' + ${field} + ' parameter'"/>
+    </div>
+
+    <h3 class="centered"><b>This table contains the full available information about each delivery.</b></h3>
+
+    <table class="table table-condensed table-hover">
+        <thead>
+        <tr>
+            <th style="width: 40px">
+                ID
+            </th>
+            <th class="sortable" style="width: 11%">
+                TYPE
+                <span class="caret-blank">
+                </span>
+            </th>
+            <th class="sortable" style="width: 8%"
+                data-tooltip-append-to-body="true">
+                SIZE
+                <span class="caret-blank">
+                </span>
+            </th>
+            <th class="sortable" style="width: 8%">
+                WEIGHT
+                <span class="caret-blank">
+                </span>
+            </th>
+            <th class="sortable">
+                ORDER DATE
+                <span class="caret-blank">
+                </span>
+            </th>
+            <th class="sortable" style="width: 12%">
+                DELIVERY DATE
+            </th>
+            <th class="sortable" style="width: 15%">
+                ADDRESS
+            </th>
+            <th class="sortable" style="width: 10%">
+                USER LOGIN
+            </th>
+            <th class="sortable" style="width: 10%">
+                STATUS
+            </th>
+            <th class="sortable" style="width: 20%">
+                ROUTE
+            </th>
+            <th class="sortable" style="width: 8%">
+                TOTAL PRICE
+            </th>
+        <tr>
+        </thead>
+        <tbody class="centered">
+        <th:block th:each="entity : ${entities}">
+            <tr>
+                <td class="table-row-index"
+                    th:text="${entity.id}"/>
+                <td class="table-row-index"
+                    th:text="${entity.luggageType}"/>
+                <td class="table-row-index"
+                    th:text="${entity.luggageSize}"/>
+                <td class="table-row-index"
+                    th:text="${entity.weight}"/>
+                <td class="table-row-index"
+                    th:text="${entity.startDate}"/>
+                <td class="table-row-index"
+                    th:text="${entity.deliveryDate}"/>
+                <td class="table-row-index"
+                    th:text="${entity.address}"/>
+                <td class="table-row-index"
+                    th:text="${entity.user.login}"/>
+                <td class="table-row-index"
+                    th:text="${entity.deliveryStatus}"/>
+                <td class="table-row-index"
+                    th:text="${entity.route.startPoint} + ' --> ' + ${entity.route.destinationPoint}"/>
+                <td class="table-row-index"
+                    th:text="${entity.totalPrice}"/>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+    <form th:action="@{/reports/view/pdf}" class="centered">
+        <input type="submit" value="DOWNLOAD PDF">
+        <input type="hidden" name="type" th:value="${name}">
+        <input type="hidden" name="field" th:value="${field}">
+        <input type="hidden" name="entities" th:value="${entities}">
+    </form>
+    <br>
+    <br>
+
+    <div class="footer-basic">
+        <footer>
+            <div class="social">
+                <a href="#"><i class="icon ion-social-instagram"></i></a>
+                <a href="#"><i class="icon ion-social-snapchat"></i></a>
+                <a href="#"><i class="icon ion-social-twitter"></i></a>
+                <a href="#"><i class="icon ion-social-facebook"></i></a>
+            </div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a th:href="@{/}">Home</a></li>
+                <li class="list-inline-item"><a href="#">Services</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">Fietisov Hlib © 2022</p>
+        </footer>
+    </div>
+
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>-->
+
+</main>
+</body>
+</html>
