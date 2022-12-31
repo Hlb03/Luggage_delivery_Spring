@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Integer> {
 
-    @Query("SELECT COUNT(r) FROM Route r")
-    long countRoutes();
-
     Page<Route> findAll(Pageable pageable);
 
     List<Route> findAll();

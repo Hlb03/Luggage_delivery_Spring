@@ -13,8 +13,5 @@ import java.math.BigDecimal;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getUserByLogin(String login);
-
-    @Modifying
-    @Query("UPDATE User u SET u.balance = :newBalance WHERE u.id = :userId")
-    void updateUserBalance(@Param("newBalance")BigDecimal balance, @Param("userId") int userId);
+    User getUserByActivationCode(String code);
 }
