@@ -26,10 +26,8 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public Page<Route> findAllRoutes(int page, String field, String typeOfSort) {
-//        System.out.println("In SERVICE page = " + page);
         ResourceBundle rb = ResourceBundle.getBundle("data-amount");
         int routesPerPage = Integer.parseInt(rb.getString("main-page.route"));
-
 
         Pageable pg = PageRequest.of(page - 1, routesPerPage,
                 typeOfSort.equals("asc") ? Sort.by(field).ascending() : Sort.by(field).descending());
@@ -41,8 +39,4 @@ public class RouteServiceImpl implements RouteService {
         return routeRepository.findAll();
     }
 
-    @Override
-    public long getTotalRoutesAmount() {
-        return routeRepository.countRoutes();
-    }
 }

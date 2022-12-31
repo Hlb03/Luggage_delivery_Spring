@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RouteService {
 
-    long getTotalRoutesAmount();
     Page<Route> findAllRoutes(int page, String fieldName, String typeOfSort);
+
     List<Route> findRoutes();
 }
