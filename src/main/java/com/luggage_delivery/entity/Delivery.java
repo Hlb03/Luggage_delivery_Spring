@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -24,6 +22,7 @@ public class Delivery implements Serializable {
     private int id;
 
     @NotNull
+    @Min(value = 5, message = "Luggage size is too small")
     @Column(name = "luggage_size")
     private double luggageSize;
 
@@ -47,21 +46,26 @@ public class Delivery implements Serializable {
 
     @NotNull
     @NotBlank
+    @Size(min = 4, max = 64, message = "Your address is to short or long")
     @Column(name = "delivery_address")
     private String address;
 
     @NotNull
+    @Min(value = 100, message = "Price should not be lower than 100")
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @Column(name = "delivery_status_name")
     @Enumerated(value = EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "routes_id")
     private Route route;

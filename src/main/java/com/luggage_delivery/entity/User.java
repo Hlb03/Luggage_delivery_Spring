@@ -49,9 +49,11 @@ public class User implements Serializable {
     private String password;
 
     @NotNull
+    @Min(value = 0, message = "Balance could not be negative")
     @Column(name = "balance")
     private BigDecimal balance;
 
+    @NotNull
     @Column(name = "role_name")
     @Enumerated(value = EnumType.STRING)
     private Role roleName;
@@ -59,6 +61,7 @@ public class User implements Serializable {
     @OneToMany (mappedBy = "user")
     private Set<Delivery> deliveries;
 
+    @NotNull
     @Column(name = "status_name")
     @Enumerated(value = EnumType.STRING)
     private Status statusName;

@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -31,6 +28,7 @@ public class Tariff implements Serializable {
     private String type;
 
     @NotNull(message = "Tariff price could not be null")
+    @Min(value = 0, message = "Price on tariff could not be negative")
     @Column(name = "price")
     private BigDecimal price;
 
