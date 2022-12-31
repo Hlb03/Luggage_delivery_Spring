@@ -21,5 +21,6 @@
 }
 
 .image-background {
-    background-image: url("static/styles/images/registration_img.webp");
+    background-image: url("../images/registration_img.webp");
+    /*background-image: url("/images/registration_img.webp");*/
 }

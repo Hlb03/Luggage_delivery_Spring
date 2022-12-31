@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<head>
+<head lang="en" xmlns:th="http://www.thymeleaf.org">
     <title>Registration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
 
-    <link th:href="@{/css/registration.css}" rel="stylesheet">
-    <script type="text/javascript" th:src="@{/js/password-equality.js}"></script>
+    <link th:href="@{css/registration.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{css/error-message.css}" type="text/css" rel="stylesheet">
+    <script type="text/javascript" th:src="@{js/registration-form-check.js}"></script>
 
 </head>
 <header>
@@ -39,10 +40,13 @@
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Create new account</h2>
-                            <form method="post" th:action="@{/addNewUser}">
+
+                            <p class="error" th:text="${error}">some text</p>
+
+                            <form method="post" th:action="@{/registration/addNewUser}" th:object="${user}">
                                 <div class="form-outline mb-4">
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="firstName"
+                                    <input type="text" name="firstName"
+                                           class="form-control form-control-lg"
                                            pattern="[a-zA-zа-яА-Я ]{2,20}"
                                            title="First letter should be capital. Example - Alina"
                                            placeholder="Your first name"
@@ -57,7 +61,7 @@
                                 </div>
                                 <div class="form-outline mb-4">
                                     <input type="email" class="form-control form-control-lg"
-                                           name="email"
+                                           name="login"
                                            maxlength="40"
                                            placeholder="Your email"
                                            required/>
@@ -67,22 +71,24 @@
                                            name="password"
                                            id="pas1"
                                            minlength="4" maxlength="30"
-                                           onkeyup='PassCheck();'
-                                           placeholder="Enter your password" required/>
+                                           placeholder="Enter your password"
+                                           onkeyup='checkForm();'
+                                           required/>
                                 </div>
                                 <div class="form-outline mb-4">
                                     <input type="password" class="form-control form-control-lg"
                                            name="password2"
                                            id="pas2"
                                            minlength="4" maxlength="30"
-                                           onkeyup='PassCheck();'
-                                           placeholder="Repeat your password" required/>
+                                           placeholder="Repeat your password"
+                                           onkeyup='checkForm();'
+                                           required/>
                                 </div>
                                 <div class="form-check d-flex justify-content-center mb-5">
                                     <input class="form-check-input me-2" type="checkbox"
-                                           onchange="document.getElementById('registrateBtn').disabled = !this.checked;"
-                                           value="" id="form2Example3cg"/>
-                                    <label class="form-check-label" for="form2Example3cg">
+                                           value="" id="checkBox"
+                                           onchange='checkForm();'/>
+                                    <label class="form-check-label" for="checkBox">
                                         I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
                                     </label>
                                 </div>
@@ -106,4 +112,3 @@
     </div>
 </section>
 </body>
-</html>
