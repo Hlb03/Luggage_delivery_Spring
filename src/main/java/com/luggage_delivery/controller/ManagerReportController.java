@@ -10,6 +10,8 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import com.luggage_delivery.reports.DeliveryReport;
 import com.luggage_delivery.reports.DeliveryReportProvider;
 import com.luggage_delivery.service.RouteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,8 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/reports")
 public class ManagerReportController {
+
+    private final static Logger LOG = LoggerFactory.getLogger(ManagerReportController.class);
 
     private final RouteService routeService;
     private final DeliveryReportProvider deliveryReportProvider;
@@ -61,6 +65,7 @@ public class ManagerReportController {
         model.addAttribute("entities", deliveryReport.createReport(reportField));
         model.addAttribute("name", typeOfReport);
         model.addAttribute("field", reportField);
+        LOG.debug("REPORT WAS CREATED");
         return "report";
     }
 
@@ -86,6 +91,7 @@ public class ManagerReportController {
 
         byte[] bytes = target.toByteArray();
 
+        LOG.debug("PDF REPORT WAS CREATED");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(bytes);

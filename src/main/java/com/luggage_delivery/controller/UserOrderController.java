@@ -59,8 +59,8 @@ public class UserOrderController {
     @PostMapping("/pay/{orderId}")
     public String payOrder(@PathVariable int orderId,
                            Principal principal) throws LackOfBalanceException {
+            deliveryService.payOrder(orderId, principal.getName());
 
-        deliveryService.payOrder(orderId, principal.getName());
         return "redirect:/user-order";
     }
 }

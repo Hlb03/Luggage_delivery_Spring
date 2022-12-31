@@ -8,6 +8,8 @@ package com.luggage_delivery.config;
 import com.luggage_delivery.entity.Status;
 import com.luggage_delivery.entity.User;
 import com.luggage_delivery.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
+
+    private final static Logger LOG = LoggerFactory.getLogger(UserDetailServiceImpl.class);
 
     private final UserRepository userRepository;
 
@@ -27,8 +31,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = userRepository.getUserByLogin(login);
-        if (user == null)
+        if (user == null) {
+            LOG.debug("USER WITH LOGIN " + login + " WAS NOT FOUND. REDIRECT TO LOGIN PAGE");
             throw new UsernameNotFoundException("User with login " + login + " is not registered");
+        }
         boolean active = user.getStatusName().equals(Status.ACTIVE);
 
         return org.springframework.security.core.userdetails.User

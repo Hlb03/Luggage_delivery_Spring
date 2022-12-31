@@ -9,15 +9,18 @@ import com.luggage_delivery.entity.Status;
 import com.luggage_delivery.entity.User;
 import com.luggage_delivery.exceptions.UserRegistrateException;
 import com.luggage_delivery.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
+
+    private final static Logger LOG = LoggerFactory.getLogger(RegistrationController.class);
 
     private final UserService userService;
 
@@ -39,6 +42,7 @@ public class RegistrationController {
                                 @RequestParam("password2") String secondPassword) throws UserRegistrateException {
 
         userService.addUser(user, secondPassword);
+        LOG.debug("USER WITH LOGIN " + user.getLogin() + " WAS SUCCESSFULLY ADDED");
         return "redirect:/login";
     }
 
@@ -52,6 +56,7 @@ public class RegistrationController {
         user.setActivationCode(null);
         userService.updateUserStatus(user);
 
+        LOG.debug("USER WITH LOGIN " + user.getLogin() + " WAS SUCCESSFULLY ACTIVATED");
         return "redirect:/login";
     }
 }

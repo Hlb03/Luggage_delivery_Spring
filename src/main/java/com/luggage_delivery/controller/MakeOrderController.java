@@ -8,11 +8,16 @@ package com.luggage_delivery.controller;
 import com.luggage_delivery.entity.Delivery;
 import com.luggage_delivery.service.DeliveryService;
 import com.luggage_delivery.service.RouteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -21,6 +26,8 @@ import java.sql.Date;
 @Controller
 @RequestMapping("/make-order")
 public class MakeOrderController {
+
+    private final static Logger LOG = LoggerFactory.getLogger(MakeOrderController.class);
 
     private final RouteService routeService;
     private final DeliveryService deliveryService;
@@ -78,6 +85,7 @@ public class MakeOrderController {
         deliveryService.addNewDelivery(size, weight, type, address,
                 deliveryDate, routeId,
                 totalPrice, authentication.getName());
+        LOG.debug("NEW ORDER WAS ADDED");
         return "redirect:/user-order";
     }
 
@@ -93,6 +101,7 @@ public class MakeOrderController {
         BigDecimal totalPrice = deliveryService.calculateOrderPrice(
                 size, weight, routeId, option);
 
+        LOG.debug("DELIVERY PRICE CALCULATE IS " + totalPrice);
         return "redirect:/make-order?totalPrice=" + totalPrice + "&size=" + size +
                 "&type=" + type + "&weight=" + weight
                 + "&deliveryDate=" + deliveryDate + "&address=" + address +

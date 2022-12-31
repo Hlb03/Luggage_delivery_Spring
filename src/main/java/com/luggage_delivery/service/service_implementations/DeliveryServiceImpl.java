@@ -75,7 +75,6 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.setRoute(route);
         delivery.setUser(user);
 
-        System.out.println("DELIVERY PARAMS: " + delivery);
         deliveryRepository.save(delivery);
     }
 
@@ -125,9 +124,12 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public void changeStatus(int orderId, String typeOfProcess) {
         Delivery delivery = deliveryRepository.getReferenceById(orderId);
-        if (typeOfProcess.equals("approve"))
+        if (typeOfProcess.equals("approve")) {
             delivery.setDeliveryStatus(DeliveryStatus.PAY);
-        else delivery.setDeliveryStatus(DeliveryStatus.REJECTED);
+        }
+        else {
+            delivery.setDeliveryStatus(DeliveryStatus.REJECTED);
+        }
     }
 
     @Override

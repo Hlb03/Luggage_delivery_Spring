@@ -7,6 +7,8 @@ import com.luggage_delivery.exceptions.UserRegistrateException;
 import com.luggage_delivery.repository.UserRepository;
 import com.luggage_delivery.service.UserService;
 import com.luggage_delivery.service.mail.MailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

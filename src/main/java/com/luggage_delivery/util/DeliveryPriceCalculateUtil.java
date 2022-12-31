@@ -6,6 +6,8 @@ package com.luggage_delivery.util;
 */
 
 import com.luggage_delivery.entity.Tariff;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -13,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DeliveryPriceCalculateUtil {
+
+    private final static Logger LOG = LoggerFactory.getLogger(DeliveryPriceCalculateUtil.class);
+
     public static BigDecimal priceCalculate(double weight, double size, double distance, String option, List<Tariff> tariffs) {
         BigDecimal price = new BigDecimal("0");
         Map<String, BigDecimal> typeAndPriceOfTariffs = getTariffPriceByName(tariffs);
@@ -26,7 +31,7 @@ public class DeliveryPriceCalculateUtil {
 
         if (price.toString().split("\\.")[1].length() > 2) {
             price = price.add(new BigDecimal("0.01"));
-            System.out.println("PRICE AFTER ADDING 0.01 " + price);
+            LOG.debug("PRICE AFTER ADDING 0.01 IS " + price);
             price = new BigDecimal(price.toString().substring(0,
                     price.toString().length() - cutExtraSymbolsInPrice(price.toString())));
         }
@@ -48,7 +53,7 @@ public class DeliveryPriceCalculateUtil {
 
         for (; amountOfSymbols < amountOfSymbolAfterDotInPrice - 2; amountOfSymbols++) {}
 
-        System.out.println("Amount of symbols to cut off " + amountOfSymbols);
+        LOG.debug(amountOfSymbols + " SYMBOLS TO CUT OFF FROM GENERATED PRICE");
         return amountOfSymbols;
     }
 }
