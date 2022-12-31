@@ -25,14 +25,14 @@ public class User implements Serializable {
     @NotNull
     @NotBlank(message = "Name could not be blank")
     @Size(max = 30)
-    @Pattern(regexp = "\\D[\\d- ]+", message = "Name should starts with capital letter")
+    @Pattern(regexp = "\\D[a-z- ]+", message = "Name should starts with capital letter")
     @Column(name = "first_name")
     private String firstName;
 
     @NotNull
     @NotBlank(message = "Last name could not be blank")
     @Size(max = 30)
-    @Pattern(regexp = "\\D[\\d- ]+", message = "Last name should starts with capital letter")
+    @Pattern(regexp = "\\D[a-z- ]+", message = "Last name should starts with capital letter")
     @Column(name = "last_name")
     private String lastName;
 
@@ -44,7 +44,7 @@ public class User implements Serializable {
 
     @NotNull
     @NotBlank
-    @Size(min = 5, max = 20, message = "Password should contain at least 5 symbols")
+    @Size(min = 5, max = 256, message = "Password should contain at least 5 symbols")
     @Column(name = "password")
     private String password;
 
@@ -62,6 +62,9 @@ public class User implements Serializable {
     @Column(name = "status_name")
     @Enumerated(value = EnumType.STRING)
     private Status statusName;
+
+    @Column(name = "activation_code")
+    private String activationCode;
 
     @Override
     public String toString() {
