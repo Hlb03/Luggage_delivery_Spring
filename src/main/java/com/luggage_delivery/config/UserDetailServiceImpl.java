@@ -29,13 +29,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         User user = userRepository.getUserByLogin(login);
         if (user == null)
             throw new UsernameNotFoundException("User with login " + login + " is not registered");
-        System.out.println("USER: " + user);
-        boolean active = user.getStatusName().equals(Status.BLOCKED);
+        boolean active = user.getStatusName().equals(Status.ACTIVE);
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getLogin())
                 .password(user.getPassword())
-                .disabled(active)
+                .disabled(!active)
                 .authorities(user.getRoleName().getAuthority())
                 .build();
     }

@@ -32,12 +32,17 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests(request -> {
-                    request.antMatchers("/make-order/order-process").hasRole(Role.USER.name());
-                    request.antMatchers("/", "/make-order", "/make-order/price-calculate", "/registration")
+                    request.antMatchers("/make-order/order-process", "/user-order").hasRole(Role.USER.name());
+                    request.antMatchers("/admin-room/**", "/reports/**").hasRole(Role.MANAGER.name());
+                    request.antMatchers("/", "/make-order", "/make-order/price-calculate", "/registration/**"
+                                                    , "/**")
+//                                                   "/registration", "/registration/addNewUser")
                             .permitAll().anyRequest().authenticated();
                 })
-                .formLogin(login -> login.loginPage("/login").usernameParameter("email")
-                        .permitAll().defaultSuccessUrl("/"))
+                .formLogin(login -> login.loginPage("/login")
+                                .usernameParameter("email")
+                                .permitAll()
+                                .defaultSuccessUrl("/", true))
                 .logout(logout -> {
                     new AntPathRequestMatcher("logout", "POST");
                     logout.invalidateHttpSession(true);
@@ -49,11 +54,6 @@ public class WebSecurityConfig {
                 .disable()
                 .build();
     }
-
-//    @Bean
-//    protected void config(AuthenticationManagerBuilder auth) {
-//        auth.authenticationProvider(daoAuthenticationProvider());
-//    }
 
     @Bean
     protected DaoAuthenticationProvider daoAuthenticationProvider() {
